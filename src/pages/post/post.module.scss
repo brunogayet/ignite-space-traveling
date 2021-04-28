@@ -1,1 +1,49 @@
-// TODO
+.postContainer {
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gray-50);
+    margin-bottom: 1.5rem;
+  }
+}
+
+.banner {
+  margin: 1rem 0 3rem 0;
+  height: 400px;
+  width: 100%;
+}
+
+.informationsPost {
+  margin-bottom: 25px;
+}
+
+.content {
+  margin: 50px 0;
+}
+
+.elementContent {
+  padding: 25px 0 25px 0;
+
+  h2 {
+    font-size: 1.75rem;
+    color: var(--gray-50);
+  }
+
+  div {
+    color: var(--gray-250);
+    font-size: 1rem;
+    padding-top: 20px;
+    line-height: 1.4rem;
+
+    p {
+      padding: 15px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--pink);
+    }
+  }
+
+
+}

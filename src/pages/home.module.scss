@@ -1,1 +1,33 @@
-// TODO
+.posts {
+  margin: 3rem auto 0;
+
+  a {
+    display: block;
+
+    & + a {
+      padding-top: 3rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      color: var(--gray-50);
+
+    }
+
+    p {
+      padding: 0.45rem 0 1.4rem 0;
+      color: var(--gray-150);
+      font-weight: 400;
+    }
+  }
+}
+
+button.loadMorePosts {
+  margin-top: 4rem;
+  font-size: 1.125rem;
+  color: var(--pink);
+  font-weight: 600;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+}
