@@ -7,7 +7,6 @@ import { FiCalendar, FiUser } from 'react-icons/fi';
 
 import { useState } from 'react';
 
-import Header from '../components/Header';
 import { formatDate } from '../util/format';
 import { getPrismicClient } from '../services/prismic';
 
@@ -48,7 +47,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
         const newPosts = data.results.map(post => {
           return {
             uid: post.uid,
-            first_publication_date: formatDate(post.first_publication_date),
+            first_publication_date: post.first_publication_date,
             data: {
               title: post.data.title,
               subtitle: post.data.subtitle,
@@ -67,8 +66,6 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
         <title>Home | spacetraveling.</title>
       </Head>
 
-      <Header />
-
       <main className={commonStyles.container}>
         <div className={styles.posts}>
           {posts?.map(post => (
@@ -78,7 +75,8 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
                 <p>{post.data.subtitle}</p>
                 <div className={commonStyles.informationsPost}>
                   <time>
-                    <FiCalendar size={20} /> {post.first_publication_date}
+                    <FiCalendar size={20} />{' '}
+                    {formatDate(post.first_publication_date)}
                   </time>
                   <span>
                     <FiUser size={20} /> {post.data.author}
@@ -122,7 +120,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const listPosts = response.results.map(post => {
     return {
       uid: post.uid,
-      first_publication_date: formatDate(post.first_publication_date),
+      first_publication_date: post.first_publication_date,
       data: {
         title: post.data.title,
         subtitle: post.data.subtitle,

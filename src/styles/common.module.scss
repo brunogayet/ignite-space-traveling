@@ -28,3 +28,18 @@
     margin-right: 0.5rem;
   }
 }
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: auto;
+
+  span {
+    font-weight: bold;
+    padding: 1rem;
+    border: 1px solid;
+    border-color: var(--pink);
+    border-radius: 5px;
+  }
+}

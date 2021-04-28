@@ -3,11 +3,10 @@ import Head from 'next/head';
 import { RichText } from 'prismic-dom';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
 import Prismic from '@prismicio/client';
+import { useRouter } from 'next/router';
 import { formatDate } from '../../util/format';
 
 import { getPrismicClient } from '../../services/prismic';
-
-import Header from '../../components/Header';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
@@ -34,6 +33,16 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps): JSX.Element {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return (
+      <div className={commonStyles.loading}>
+        <span>Carregando...</span>
+      </div>
+    );
+  }
+
   // Counting words
   const readingTime = post.data.content.reduce(
     (acc, element) => {
@@ -60,8 +69,6 @@ export default function Post({ post }: PostProps): JSX.Element {
         <title>{post.data.title} | Spacetraveling.</title>
       </Head>
 
-      <Header />
-
       <div
         className={styles.banner}
         style={{
@@ -77,7 +84,7 @@ export default function Post({ post }: PostProps): JSX.Element {
             className={`${commonStyles.informationsPost} ${styles.informationsPost}`}
           >
             <time>
-              <FiCalendar size={20} /> {post.first_publication_date}
+              <FiCalendar size={20} /> {formatDate(post.first_publication_date)}
             </time>
             <span>
               <FiUser size={20} /> {post.data.author}
@@ -111,7 +118,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await prismic.query(
     [Prismic.predicates.at('document.type', 'posts')],
     {
-      fetch: ['post.uid'],
+      fetch: ['posts.uid'],
       orderings: '[document.first_publication_date desc]',
       pageSize: 2,
     }
@@ -131,9 +138,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const response = await prismic.getByUID('posts', String(slug), {});
 
   const post = {
-    first_publication_date: formatDate(response.first_publication_date),
+    uid: response.uid,
+    first_publication_date: response.first_publication_date,
     data: {
       title: response.data.title,
+      subtitle: response.data.subtitle,
       banner: {
         url: response.data.banner.url,
       },
@@ -146,5 +155,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       post,
     },
+    redirect: 60 * 60 * 24, // 24 hours
   };
 };
