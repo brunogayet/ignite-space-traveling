@@ -6,3 +6,9 @@ export const formatDate = (dateToFormat: string): string => {
     locale: ptBR,
   });
 };
+
+export const formatDateTime = (dateToFormat: string): string => {
+  return format(new Date(dateToFormat), "dd LLL yyyy, 'às' HH:mm", {
+    locale: ptBR,
+  });
+};
